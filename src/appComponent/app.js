@@ -1,32 +1,47 @@
 import React from 'react'
 
-import Carousel from '../carousel.js'
+import Carousel from '../carouselComponent/carousel.js'
 import Frame from '../frameComponent/frame.js'
-import Nav from '../nav.js'
-import Slide from '../slide.js'
+import Nav from '../navComponent/nav.js'
+import Slide from '../slideComponent/slide.js'
 
 import './app.module.css'
 
 export default class DriftApp extends React.Component {
   constructor(props) {
     super(props)
-    this.handleClickPrevious = this.handleClickPrevious.bind(this)
-    this.handleClickNext = this.handleClickNext.bind(this)
     this.state = {
       showIndex: 0,
       numSlides: 5
     }
+    this.handleClickPrevious = this.handleClickPrevious.bind(this)
+    this.handleClickNext = this.handleClickNext.bind(this)
   }
+
   handleClickPrevious() {
-    this.setState({
-      showIndex: Math.max(this.state.showIndex - 1, 0)
-    })
+    if (this.state.showIndex <= 0) {
+      this.setState({
+        showIndex: this.state.numSlides - 1
+      })
+    } else {
+      this.setState({
+        showIndex: Math.max(this.state.showIndex - 1, 0)
+      })
+    }
   }
+
   handleClickNext() {
-    this.setState({
-      showIndex: Math.min(this.state.showIndex + 1, this.state.numSlides - 1)
-    })
+    if (this.state.showIndex >= this.state.numSlides - 1) {
+      this.setState({
+        showIndex: 0
+      })
+    } else {
+      this.setState({
+        showIndex: Math.min(this.state.showIndex + 1, this.state.numSlides - 1)
+      })
+    }
   }
+
   renderNav() {
     return (
       <Nav
